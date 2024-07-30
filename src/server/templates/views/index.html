@@ -8,8 +8,37 @@
 {% endblock %}
 
 {% block content %}
-<header class="container">
-    <h1>Timetable Generator</h1>
-    <p>Lorem ipsum</p>
-</header>
+<main class="container">
+    <header class="py-5">
+        <h1>Timetable Generator</h1>
+        <p>University Course Timetabling Problem (UCTP) solution for universities with multiclass campuses. Submitted as implementation of <b>18220009 Fatih Darielma Gaizta</b>'s thesis.</p>
+    </header>
+    <form action="{% url 'index' %}" method="POST" class="px-5">
+        <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 1. Define Problem Domain</h2>
+        <div class="row my-3 form-group">
+            <label for="locations" class="col-md-2 col-form-label">Locations</label>
+            <div class="col-md-10">
+                <input type="number" name="locations" id="locations" class="form-control" min="1">
+                <small class="text-muted">How many locations do you have?</small>
+            </div>
+        </div>
+        <div class="row my-3 form-group">
+            <label for="courses" class="col-md-2 col-form-label">Courses</label>
+            <div class="col-md-10">
+                <input type="number" name="courses" id="courses" class="form-control" min="1">
+                <small class="text-muted">How many courses do you have?</small>
+            </div>
+        </div>
+        <div class="row my-3 form-group">
+            <label for="timeslots" class="col-md-2 col-form-label">Timeslots</label>
+            <div class="col-md-10">
+                <input type="number" name="timeslots" id="timeslots" class="form-control" min="1">
+                <small class="text-muted">How many timeslots a day do you want?</small>
+            </div>
+        </div>
+        <div class="d-flex flex-row-reverse py-3">
+            <button type="submit" class="btn btn-primary">Next</button>
+        </div>
+    </form>
+</main>
 {% endblock %}
