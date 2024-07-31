@@ -1,3 +1,8 @@
+button {
+    margin: auto 1rem;
+    min-width: 100px;
+}
+
 .vertical-card {
     display: flex;
     align-items: center;
