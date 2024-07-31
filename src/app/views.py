@@ -2,4 +2,4 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request, 'views/index.html')
+    return render(request, 'views/step_1.html')
