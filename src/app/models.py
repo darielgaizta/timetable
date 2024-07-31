@@ -21,8 +21,8 @@ class Room(models.Model):
     
 
 class LocationLink(models.Model):
-    location1 = models.ForeignKey(Location, on_delete=models.CASCADE)
-    location2 = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location1 = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='location1')
+    location2 = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='location2')
     travel_time = models.IntegerField()
 
     def __str__(self) -> str:
@@ -68,8 +68,11 @@ class Timeslot(models.Model):
 
 class Schedule(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    clazz = models.ForeignKey(CourseClass, on_delete=models.CASCADE)
     timeslot = models.ForeignKey(Timeslot, on_delete=models.CASCADE)
+    course_class = models.ForeignKey(CourseClass, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.clazz.__str__()
+        return self.course_class.__str__()
+    
+    def unpack(self):
+        return self.room, self.timeslot, self.course_class
