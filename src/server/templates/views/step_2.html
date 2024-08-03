@@ -12,7 +12,7 @@
     <main class="container">
         <form action="{% url 'step_2' %}" method="post" class="px-5">
             {% csrf_token %}
-            <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 2. Define Parameters and Additional Prblem Domain</h2>
+            <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 2. Define Parameters and Additional Problem Domain</h2>
             <div class="row">
                 <div class="col-md-6">
                     <h3 class="fs-6 p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">2.1. Configure Algorithm Parameter</h3>
@@ -33,54 +33,34 @@
                 </div>
                 <div class="col-md-6">
                     <h3 class="fs-6 p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">2.2. Define Number of Rooms for Each Location</h3>
+                    
+                    {% for i in nb_locations %}
                     <div class="row my-3 form-group">
-                        <label for="rooms1" class="col-md-4 col-form-label">Rooms in <b>Location 1</b></label>
+                        <label for="rooms{{i}}" class="col-md-4 col-form-label">Rooms in <b>Location {{i}}</b></label>
                         <div class="col-md-8">
-                            <input type="number" name="rooms1" id="rooms1" class="form-control" min="1">
-                            <small class="text-muted">How many rooms do you have in Location 1?</small>
+                            <input type="number" name="rooms{{i}}" id="rooms{{i}}" class="form-control" min="1">
+                            <small class="text-muted">How many rooms do you have in Location {{i}}?</small>
                         </div>
                     </div>
-                    <div class="row my-3 form-group">
-                        <label for="rooms2" class="col-md-4 col-form-label">Rooms in <b>Location 2</b></label>
-                        <div class="col-md-8">
-                            <input type="number" name="rooms2" id="rooms2" class="form-control" min="1">
-                            <small class="text-muted">How many rooms do you have in Location 2?</small>
-                        </div>
-                    </div>
-                    <div class="row my-3 form-group">
-                        <label for="rooms3" class="col-md-4 col-form-label">Rooms in <b>Location 3</b></label>
-                        <div class="col-md-8">
-                            <input type="number" name="rooms3" id="rooms3" class="form-control" min="1">
-                            <small class="text-muted">How many rooms do you have in Location 3?</small>
-                        </div>
-                    </div>
+                    {% endfor %}
+
                     <h3 class="fs-6 p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">2.3. Define Number of Classes for Each Course</h3>
+                    
+                    {% for i in nb_courses %}
                     <div class="row my-3 form-group">
-                        <label for="class1" class="col-md-4 col-form-label">Classes for <b>Course 1</b></label>
+                        <label for="class{{i}}" class="col-md-4 col-form-label">Classes for <b>Course {{i}}</b></label>
                         <div class="col-md-8">
-                            <input type="number" name="class1" id="class1" class="form-control" min="1">
-                            <small class="text-muted">How many classes are you going to open for Course 1?</small>
+                            <input type="number" name="class{{i}}" id="class{{i}}" class="form-control" min="1">
+                            <small class="text-muted">How many classes are you going to open for Course {{i}}?</small>
                         </div>
                     </div>
-                    <div class="row my-3 form-group">
-                        <label for="class2" class="col-md-4 col-form-label">Classes for <b>Course 2</b></label>
-                        <div class="col-md-8">
-                            <input type="number" name="class2" id="class2" class="form-control" min="1">
-                            <small class="text-muted">How many classes are you going to open for Course 2?</small>
-                        </div>
-                    </div>
-                    <div class="row my-3 form-group">
-                        <label for="class3" class="col-md-4 col-form-label">Classes for <b>Course 3</b></label>
-                        <div class="col-md-8">
-                            <input type="number" name="class3" id="class3" class="form-control" min="1">
-                            <small class="text-muted">How many classes are you going to open for Course 3?</small>
-                        </div>
-                    </div>
+                    {% endfor %}
+                    
                 </div>
             </div>
             <div class="d-flex flex-row-reverse py-3">
                 <button class="btn btn-primary" name="next" value="1">Next</button>
-                <button class="btn btn-secondary" name="previous" value="1">Previous</button>
+                <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_1' %}">Previous</a>
             </div>
         </form>
     </main>

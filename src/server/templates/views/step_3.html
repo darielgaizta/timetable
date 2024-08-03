@@ -11,30 +11,24 @@
     <form action="{% url 'step_3' %}" method="POST" class="px-5">
         {% csrf_token %}
         <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 3. Specify Distance between Locations</h2>
-        <div class="row my-3 form-group">
-            <label for="travel_time_1_2" class="col-md-2 col-form-label">Travel Time: <b>Location 1 to Location 2</b></label>
-            <div class="col-md-10">
-                <input type="number" name="travel_time_1_2" id="travel_time_1_2" class="form-control" min="1">
-                <small class="text-muted">How long does it take to travel from Location 1 to Location 2?</small>
-            </div>
-        </div>
-        <div class="row my-3 form-group">
-            <label for="travel_time_1_3" class="col-md-2 col-form-label">Travel Time: <b>Location 1 to Location 3</b></label>
-            <div class="col-md-10">
-                <input type="number" name="travel_time_1_3" id="travel_time_1_3" class="form-control" min="1">
-                <small class="text-muted">How long does it take to travel from Location 1 to Location 3?</small>
-            </div>
-        </div>
-        <div class="row my-3 form-group">
-            <label for="travel_time_2_3" class="col-md-2 col-form-label">Travel Time: <b>Location 2 to Location 3</b></label>
-            <div class="col-md-10">
-                <input type="number" name="travel_time_2_3" id="travel_time_2_3" class="form-control" min="1">
-                <small class="text-muted">How long does it take to travel from Location 2 to Location 3?</small>
-            </div>
-        </div>
+        
+        {% for i in nb_locations %}
+            {% for j in nb_locations %}
+                {% if j > i %}
+                <div class="row my-3 form-group">
+                    <label for="travel_time_{{i}}_{{j}}" class="col-md-2 col-form-label">Travel Time: <b>Location {{i}} to Location {{j}}</b></label>
+                    <div class="col-md-10">
+                        <input type="number" name="travel_time_{{i}}_{{j}}" id="travel_time_{{i}}_{{j}}" class="form-control" min="1">
+                        <small class="text-muted">How long does it take to travel from Location {{i}} to Location {{j}}?</small>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+            
         <div class="d-flex flex-row-reverse py-3">
             <button class="btn btn-primary">Submit</button>
-            <button class="btn btn-secondary" name="previous" value="1">Previous</button>
+            <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_2' %}">Previous</a>
         </div>
     </form>
 </main>

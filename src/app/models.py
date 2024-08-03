@@ -66,13 +66,13 @@ class Timeslot(models.Model):
 
 # Schedule
 
-class Schedule(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    timeslot = models.ForeignKey(Timeslot, on_delete=models.CASCADE)
-    course_class = models.ForeignKey(CourseClass, on_delete=models.CASCADE)
+# class Schedule(models.Model):
+#     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+#     timeslot = models.ForeignKey(Timeslot, on_delete=models.CASCADE)
+#     course_class = models.ForeignKey(CourseClass, on_delete=models.CASCADE)
 
-    def __str__(self) -> str:
-        return self.course_class.__str__()
+#     def __str__(self) -> str:
+#         return self.course_class.__str__()
     
-    def unpack(self):
-        return self.room, self.timeslot, self.course_class
+#     def unpack(self):
+#         return self.room, self.timeslot, self.course_class

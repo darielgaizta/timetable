@@ -1,20 +1,43 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
-def step_1(request, context={}):
+def step_1(request):
     if request.method == 'POST':
-        return redirect(step_2)
-    return render(request, 'views/step_1.html', context)
+        request.session['nb_courses'] = request.POST['courses']
+        request.session['nb_timeslots'] = request.POST['timeslots']
+        request.session['nb_locations'] = request.POST['locations']
+        return redirect('step_2')
+    
+    return render(request, 'views/step_1.html')
 
-def step_2(request, context={}):
+def step_2(request):
+    context = {
+        'nb_courses': range(1, int(request.session['nb_courses']) + 1),
+        'nb_timeslots': range(1, int(request.session['nb_timeslots']) + 1),
+        'nb_locations': range(1, int(request.session['nb_locations']) + 1),
+    }
+    
     if request.method == 'POST':
-        if request.POST.get('previous', 0): return redirect(step_1)
-        if request.POST.get('next', 0):
-            # TODO Process data
-            return redirect(step_3)
+        request.session['search_space'] = request.POST['search_space']
+        request.session['iterations'] = request.POST['iterations']
+        request.session['rooms_dict'] = {f'rooms{i}': request.POST[f'rooms{i}'] for i in context['nb_locations']}
+        request.session['class_dict'] = {f'class{i}': request.POST[f'class{i}'] for i in context['nb_courses']}
+        return redirect('step_3')        
+        
     return render(request, 'views/step_2.html', context)
 
-def step_3(request, context={}):
+def step_3(request):
+    context = {
+        'nb_locations': range(1, int(request.session['nb_locations']) + 1),
+    }
+
     if request.method == 'POST':
-        if request.POST.get('previous', 0): return redirect(step_2)
+        request.session['travel_time_dict'] = {
+            f'travel_time_{i}_{j}': request.POST[f'travel_time_{i}_{j}']
+            for i in range(1, int(request.session['nb_locations']))
+            for j in range(i + 1, int(request.session['nb_locations']) + 1)}
+        
+        # TODO 1 Run algorithm.
+        # TODO 2 Handle output.
+
     return render(request, 'views/step_3.html', context)
