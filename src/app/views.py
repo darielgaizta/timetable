@@ -21,23 +21,21 @@ def step_2(request):
         request.session['search_space'] = request.POST['search_space']
         request.session['iterations'] = request.POST['iterations']
         request.session['rooms_dict'] = {f'rooms{i}': request.POST[f'rooms{i}'] for i in context['nb_locations']}
-        request.session['class_dict'] = {f'class{i}': request.POST[f'class{i}'] for i in context['nb_courses']}
+        request.session['travel_time_dict'] = {f'travel_time_{i}_{j}': request.POST[f'travel_time_{i}_{j}']
+                                               for i in range(1, int(request.session['nb_locations']))
+                                               for j in range(i + 1, int(request.session['nb_locations']) + 1)}
         return redirect('step_3')        
         
     return render(request, 'views/step_2.html', context)
 
 def step_3(request):
-    context = {
-        'nb_locations': range(1, int(request.session['nb_locations']) + 1),
-    }
+    context = {}
 
     if request.method == 'POST':
-        request.session['travel_time_dict'] = {
-            f'travel_time_{i}_{j}': request.POST[f'travel_time_{i}_{j}']
-            for i in range(1, int(request.session['nb_locations']))
-            for j in range(i + 1, int(request.session['nb_locations']) + 1)}
+        pass
         
-        # TODO 1 Run algorithm.
-        # TODO 2 Handle output.
+        # TODO 1 Instantiate data.
+        # TODO 2 Run algorithm.
+        # TODO 3 Handle output.
 
     return render(request, 'views/step_3.html', context)

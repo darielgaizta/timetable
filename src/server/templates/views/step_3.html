@@ -12,18 +12,14 @@
         {% csrf_token %}
         <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 3. Specify Distance between Locations</h2>
         
-        {% for i in nb_locations %}
-            {% for j in nb_locations %}
-                {% if j > i %}
-                <div class="row my-3 form-group">
-                    <label for="travel_time_{{i}}_{{j}}" class="col-md-2 col-form-label">Travel Time: <b>Location {{i}} to Location {{j}}</b></label>
-                    <div class="col-md-10">
-                        <input type="number" name="travel_time_{{i}}_{{j}}" id="travel_time_{{i}}_{{j}}" class="form-control" min="1">
-                        <small class="text-muted">How long does it take to travel from Location {{i}} to Location {{j}}?</small>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
+        {% for i in nb_courses %}
+        <div class="row my-3 form-group">
+            <label for="class{{i}}" class="col-md-4 col-form-label">Classes for <b>Course {{i}}</b></label>
+            <div class="col-md-8">
+                <input type="number" name="class{{i}}" id="class{{i}}" class="form-control" min="1">
+                <small class="text-muted">How many classes are you going to open for Course {{i}}?</small>
+            </div>
+        </div>
         {% endfor %}
             
         <div class="d-flex flex-row-reverse py-3">
