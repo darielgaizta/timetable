@@ -12,7 +12,8 @@ class DataGeneratorService:
         self.rooms = []
         self.courses = []
         self.locations = []
-        
+        self.timeslots = []
+        self.course_classes = []
 
     def generate_code(self, length):
         return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
@@ -29,7 +30,7 @@ class DataGeneratorService:
         for _ in range(nb_rooms):
             name = self.faker.place_name()
             code = self.generate_code(length=5)
-            capacity = random.randint(20, 100)
+            capacity = random.randint(40, 100)
             location = random.choice(self.locations)
             new_room = models.Room(name, code, capacity, location)
             self.rooms.append(new_room)
@@ -43,3 +44,17 @@ class DataGeneratorService:
             department = self.faker.department()
             new_courses = models.Course(name, code, credit, semester, department)
             self.courses.append(new_courses)
+    
+    def generate_course_classes(self, nb_courses, course_classes_dict):
+        self.generate_courses(nb_courses)
+        for course in self.courses:
+            number = course_classes_dict[course]
+            capacity = random.randint(40, 100)
+            new_course_class = models.CourseClass(number, course, capacity)
+            self.course_classes.append(new_course_class)
+    
+    def generate_timeslots(self, nb_timeslots):
+        for _ in range(nb_timeslots):
+            code = self.generate_code(length=3)
+            new_timeslot = models.Timeslot(code)
+            self.timeslots.append(new_timeslot)
