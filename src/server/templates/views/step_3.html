@@ -40,7 +40,7 @@
         {% endfor %}
             
         <div class="d-flex flex-row-reverse py-3">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" onclick="alert('Please wait while we are generating your timetable. As soon as it is done, you will be redirected to home page.')">Submit</button>
             <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_2' %}">Previous</a>
         </div>
     </form>

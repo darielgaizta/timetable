@@ -1,5 +1,6 @@
 """Services for internal operations."""
 
+import re
 import random
 import string
 from faker import Faker
@@ -14,10 +15,11 @@ class AppService:
         self.__locations = []
         self.__timeslots = []
     
-    def generate_data(self, rooms_dict, nb_courses, nb_timeslots, nb_locations):
+    def generate_data(self, rooms_dict, nb_courses, nb_timeslots, nb_locations, travel_time_dict):
         self.__generate_rooms(rooms_dict, nb_locations)
         self.__generate_timeslots(nb_timeslots)
         self.__generate_courses(nb_courses)
+        self.__generate_location_links(travel_time_dict)
 
     def __generate_code(self, length):
         return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
@@ -56,6 +58,15 @@ class AppService:
             code = self.__generate_code(length=3)
             new_timeslot = models.Timeslot.objects.create(code=code)
             self.__timeslots.append(new_timeslot)
+        
+    def __generate_location_links(self, travel_time_dict):
+        for k, v in travel_time_dict.items():
+            matched = re.search(r'travel_time_(\d+)_(\d+)', k)
+            if matched:
+                i, j = int(matched.group(1)), int(matched.group(2))
+                location1 = self.__locations[i-1]
+                location2 = self.__locations[j-1]
+                models.LocationLink.objects.create(location1=location1, location2=location2, travel_time=v)
         
     def get_rooms(self): return self.__rooms
     def get_courses(self): return self.__courses

@@ -33,6 +33,7 @@ def step_2(request):
             nb_courses=request.session['nb_courses'],
             nb_timeslots=request.session['nb_timeslots'],
             nb_locations=request.session['nb_locations'],
+            travel_time_dict=request.session['travel_time_dict']
         )
 
         return redirect('step_3')
@@ -62,7 +63,7 @@ def step_3(request):
         # TODO 2 Run algorithm.
         # TODO 3 Handle output.
 
-        restart()
+        return restart()
 
     return render(request, 'views/step_3.html', context)
 
