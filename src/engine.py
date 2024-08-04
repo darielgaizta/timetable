@@ -49,11 +49,19 @@ class Engine(ABC):
         condition1 = timeslot1 == timeslot2 and room1 == room2
         condition2 = (course1.code == course2.code
                       and timeslot1 != timeslot2)
-        condition3 = (course1.code != course2.code
-                      and location1.code != location2.code
-                      and course_class1.number == course_class2.number)
+        # condition3 = (course1.code != course2.code
+        #               and location1.code != location2.code
+        #               and course_class1.number == course_class2.number)
+        condition3 = (course_class1.number == course_class2.number
+                      and course1.code != course2.code
+                      and location1.code != location2.code)
+        
+        if condition1: print('Condition 1 broken //', end=' ')
+        if condition2: print('Condition 2 broken //', end=' ')
+        if condition3: print('Condition 3 broken //', end=' ')
         
         conflict = condition1 or condition2 or condition3
+        if conflict: print('Conflict! +1')
         return 1 if conflict else 0
     
     @abstractmethod

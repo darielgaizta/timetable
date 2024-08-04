@@ -35,7 +35,9 @@ class GAEngine(engine.Engine):
         mutated_solution = copy.deepcopy(solution)
         course_class = random.choice(self.course_classes)
         mutated_solution[course_class]['room'] = random.choice(self.rooms)
+        mutated_solution[course_class]['course'] = course_class.course
         mutated_solution[course_class]['timeslot'] = random.choice(self.timeslots)
+        mutated_solution[course_class]['location'] = mutated_solution[course_class]['room'].location
         return mutated_solution
 
     def run(self, *args, **kwargs):
