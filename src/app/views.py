@@ -42,7 +42,6 @@ def step_2(request):
 def step_3(request):
     courses = models.Course.objects.all()
     context = {'courses': courses}
-    restart()
 
     if request.method == 'POST':
         for course in courses:
@@ -63,7 +62,7 @@ def step_3(request):
         # TODO 2 Run algorithm.
         # TODO 3 Handle output.
 
-        # restart()
+        restart()
 
     return render(request, 'views/step_3.html', context)
 
