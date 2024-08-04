@@ -55,18 +55,3 @@ def step_3(request):
         pass
 
     return render(request, 'views/step_3.html', context)
-
-def generate_data(request):
-    # TODO 1 Generate courses
-    # TODO 2 Generate locations
-    # TODO 3 Generate timeslots
-    # TODO 4 Generate rooms (for each location)
-    # TODO 5 Instantiating LocationLink (based on input)
-    # TODO 6 Generate course classes (how many classes are open for each course?)
-    generator = service.DataGeneratorService(
-        rooms_dict=request.session['rooms_dict'],
-        nb_courses=request.session['nb_courses'],
-        nb_timeslots=request.session['nb_timeslots'],
-        nb_locations=request.session['nb_locations'],
-    )
-    pass
