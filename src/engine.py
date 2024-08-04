@@ -33,12 +33,12 @@ class Engine(ABC):
     
     def evaluate(self, solution: dict):
         conflict = 0
-        for i in range(len(self.course_classes)):
-            for j in range(i, len(self.course_classes)):
+        for i in range(len(self.course_classes) - 1):
+            for j in range(i + 1, len(self.course_classes)):
                 course_class1 = self.course_classes[i]
                 course_class2 = self.course_classes[j]
                 conflict += self.validate_course_classes(solution, course_class1, course_class2)
-        print('Evaluating conflict -->', conflict)
+        # print('Evaluating conflict -->', conflict)
         return conflict
     
     def validate_course_classes(self, solution, course_class1, course_class2):
