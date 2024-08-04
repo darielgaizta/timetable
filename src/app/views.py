@@ -1,6 +1,6 @@
+import random
 from django.shortcuts import render, redirect
-from utils.serializer import ModelToDictSerializer
-from . import service, models
+from . import models, services
 
 # Create your views here.
 def step_1(request):
@@ -23,35 +23,55 @@ def step_2(request):
         request.session['search_space'] = int(request.POST['search_space'])
         request.session['iterations'] = int(request.POST['iterations'])
         request.session['rooms_dict'] = {f'rooms{i}': int(request.POST[f'rooms{i}']) for i in context['nb_locations']}
-        request.session['travel_time_dict'] = {f'travel_time_{i}_{j}': request.POST[f'travel_time_{i}_{j}']
+        request.session['travel_time_dict'] = {f'travel_time_{i}_{j}': int(request.POST[f'travel_time_{i}_{j}'])
                                                for i in range(1, int(request.session['nb_locations']))
                                                for j in range(i + 1, int(request.session['nb_locations']) + 1)}
+        
+        service = services.AppService()
+        service.generate_data(
+            rooms_dict=request.session['rooms_dict'],
+            nb_courses=request.session['nb_courses'],
+            nb_timeslots=request.session['nb_timeslots'],
+            nb_locations=request.session['nb_locations'],
+        )
+
         return redirect('step_3')
         
     return render(request, 'views/step_2.html', context)
 
 def step_3(request):
-    generator = service.DataGeneratorService(
-        rooms_dict=request.session['rooms_dict'],
-        nb_courses=request.session['nb_courses'],
-        nb_timeslots=request.session['nb_timeslots'],
-        nb_locations=request.session['nb_locations'],
-    )
-
-    request.session['rooms'] = ModelToDictSerializer.serialize_many(generator.get_rooms())
-    request.session['courses'] = ModelToDictSerializer.serialize_many(generator.get_courses())
-    request.session['locations'] = ModelToDictSerializer.serialize_many(generator.get_locations())
-    request.session['timeslots'] = ModelToDictSerializer.serialize_many(generator.get_timeslots())
-
-    context = {
-        'courses': ModelToDictSerializer.deserialize_many(models.Course, request.session['courses'])
-    }
+    courses = models.Course.objects.all()
+    context = {'courses': courses}
+    restart()
 
     if request.method == 'POST':
-        # TODO 1 Update courses data.
-        # TODO 2 Instantiating course classes.
+        for course in courses:
+            credit = int(request.POST.get(f'credit{course.code}'))
+            semester = int(request.POST.get(f'semester{course.code}'))
+            nb_classes = int(request.POST.get(f'nb_classes{course.code}'))
+
+            # Update courses data.
+            course.credit = credit
+            course.semester = semester
+            course.save()
+
+            # Instantiating course classes.
+            for number in range(1, nb_classes + 1):
+                capacity = random.randint(100, 500)
+                models.CourseClass.objects.create(number=number, course=course, capacity=capacity)
+
         # TODO 2 Run algorithm.
         # TODO 3 Handle output.
-        pass
+
+        # restart()
 
     return render(request, 'views/step_3.html', context)
+
+def restart():
+    models.Location.objects.all().delete()
+    models.Room.objects.all().delete()
+    models.LocationLink.objects.all().delete()
+    models.Course.objects.all().delete()
+    models.CourseClass.objects.all().delete()
+    models.Timeslot.objects.all().delete()
+    return redirect('step_1')
