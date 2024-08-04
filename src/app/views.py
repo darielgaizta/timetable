@@ -1,5 +1,6 @@
 import random
 from django.shortcuts import render, redirect
+from engines.ga import GAEngine
 from . import models, services
 
 # Create your views here.
@@ -61,6 +62,16 @@ def step_3(request):
                 models.CourseClass.objects.create(number=number, course=course, capacity=capacity)
 
         # TODO 2 Run algorithm.
+        engine = GAEngine(
+            rooms=models.Room.objects.all(),
+            timeslots=models.Timeslot.objects.all(),
+            course_classes=models.CourseClass.objects.all(),
+            location_links=models.LocationLink.objects.all(),
+            population_size=request.session['search_space'],
+            num_generations=request.session['iterations']
+        )
+        solution, score, time_taken = engine.run()
+
         # TODO 3 Handle output.
 
         return restart()

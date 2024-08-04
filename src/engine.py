@@ -38,6 +38,7 @@ class Engine(ABC):
                 course_class1 = self.course_classes[i]
                 course_class2 = self.course_classes[j]
                 conflict += self.validate_course_classes(solution, course_class1, course_class2)
+        print('Evaluating conflict -->', conflict)
         return conflict
     
     def validate_course_classes(self, solution, course_class1, course_class2):
@@ -49,7 +50,7 @@ class Engine(ABC):
         condition2 = (course1.code == course2.code
                       and timeslot1 != timeslot2)
         condition3 = (course1.code != course2.code
-                      and location1.code != location2.node
+                      and location1.code != location2.code
                       and course_class1.number == course_class2.number)
         
         conflict = condition1 or condition2 or condition3
