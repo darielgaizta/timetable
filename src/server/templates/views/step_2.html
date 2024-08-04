@@ -19,14 +19,14 @@
                     <div class="row my-3 form-group">
                         <label for="search_space" class="col-md-4 col-form-label">Search Space</label>
                         <div class="col-md-8">
-                            <input type="number" name="search_space" id="search_space" class="form-control" min="1">
+                            <input type="number" name="search_space" id="search_space" class="form-control" min="1" value="1" required>
                             <small class="text-muted">How many solution candidates do you want in the search space?</small>
                         </div>
                     </div>
                     <div class="row my-3 form-group">
                         <label for="iterations" class="col-md-4 col-form-label">Iterations</label>
                         <div class="col-md-8">
-                            <input type="number" name="iterations" id="iterations" class="form-control" min="1">
+                            <input type="number" name="iterations" id="iterations" class="form-control" min="1" value="1" required>
                             <small class="text-muted">How many iterations do you want to perform?</small>
                         </div>
                     </div>
@@ -38,13 +38,16 @@
                     <div class="row my-3 form-group">
                         <label for="rooms{{i}}" class="col-md-4 col-form-label">Rooms in <b>Location {{i}}</b></label>
                         <div class="col-md-8">
-                            <input type="number" name="rooms{{i}}" id="rooms{{i}}" class="form-control" min="1">
+                            <input type="number" name="rooms{{i}}" id="rooms{{i}}" class="form-control" min="1" value="1" required>
                             <small class="text-muted">How many rooms do you have in Location {{i}}?</small>
                         </div>
                     </div>
                     {% endfor %}
 
-                    <h3 class="fs-6 p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">2.3. Define Number of Classes for Each Course</h3>
+                    
+                    {% if nb_locations|length > 1 %}
+                    <h3 class="fs-6 p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3">2.3. Specify Distance between Locations</h3>
+                    {% endif %}
                     
                     {% for i in nb_locations %}
                         {% for j in nb_locations %}
@@ -52,7 +55,7 @@
                             <div class="row my-3 form-group">
                                 <label for="travel_time_{{i}}_{{j}}" class="col-md-2 col-form-label">Travel Time: <b>Location {{i}} to Location {{j}}</b></label>
                                 <div class="col-md-10">
-                                    <input type="number" name="travel_time_{{i}}_{{j}}" id="travel_time_{{i}}_{{j}}" class="form-control" min="1">
+                                    <input type="number" name="travel_time_{{i}}_{{j}}" id="travel_time_{{i}}_{{j}}" class="form-control" min="0" value="0" required>
                                     <small class="text-muted">How long does it take to travel from Location {{i}} to Location {{j}}?</small>
                                 </div>
                             </div>
