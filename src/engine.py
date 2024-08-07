@@ -53,10 +53,6 @@ class Engine(ABC):
                       and location1.code != location2.code
                       and course_class1.number == course_class2.number)
         
-        if condition1: print('Condition 1 broken //', end=' ')
-        if condition2: print('Condition 2 broken //', end=' ')
-        if condition3: print('Condition 3 broken //', end=' ')
-        
         conflict = condition1 or condition2 or condition3
         return 1 if conflict else 0
     
