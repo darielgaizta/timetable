@@ -38,7 +38,7 @@ class Engine(ABC):
                 course_class1 = self.course_classes[i]
                 course_class2 = self.course_classes[j]
                 conflict += self.validate_course_classes(solution, course_class1, course_class2)
-        # print('Evaluating conflict -->', conflict)
+        print('Evaluating conflict -->', conflict)
         return conflict
     
     def validate_course_classes(self, solution, course_class1, course_class2):
@@ -58,7 +58,6 @@ class Engine(ABC):
         if condition3: print('Condition 3 broken //', end=' ')
         
         conflict = condition1 or condition2 or condition3
-        if conflict: print('Conflict! +1')
         return 1 if conflict else 0
     
     @abstractmethod

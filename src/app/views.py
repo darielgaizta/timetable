@@ -3,6 +3,8 @@ import random
 from django.shortcuts import render, redirect
 from engines.ga import GAEngine
 from utils.excel import Excel
+from utils.yaml import Yaml
+from utils.serializer import ModelToDictSerializer
 from . import models, services
 
 # Create your views here.
@@ -44,8 +46,15 @@ def step_2(request):
     return render(request, 'views/step_2.html', context)
 
 def step_3(request):
+    rooms = models.Room.objects.all()
     courses = models.Course.objects.all()
-    context = {'courses': courses}
+    timeslots = models.Timeslot.objects.all()
+    
+    context = {
+        'rooms': rooms,
+        'courses': courses,
+        'timeslots': timeslots
+        }
 
     if request.method == 'POST':
         for course in courses:
@@ -63,9 +72,7 @@ def step_3(request):
                 capacity = random.randint(100, 500)
                 models.CourseClass.objects.create(number=number, course=course, capacity=capacity)
 
-        # TODO 2 Run algorithm.
-        rooms = models.Room.objects.all()
-        timeslots = models.Timeslot.objects.all()
+        # Run algorithm.
         course_classes = models.CourseClass.objects.all()
         location_links = models.LocationLink.objects.all()
 
@@ -79,11 +86,26 @@ def step_3(request):
         )
         solution, score, time_taken = engine.run()
 
-        # TODO 3 Handle output.
+        # Handle output.
         filename = 'timetable_' + str(round(time.time() * 1000))
         excel = Excel(filename=filename)
         excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + r.code for r in rooms])
         excel.write(solution=solution)
+
+        yaml = Yaml(filename=filename)
+        yaml.write(content={
+            'algorithm': 'Genetic Algorithm',
+            'conflict': score,
+            'duration': time_taken,
+            'domain': {
+                'rooms': len(rooms),
+                'classes': len(course_classes),
+                'courses': request.session['nb_courses'],
+                'timeslots': request.session['nb_timeslots'],
+                'locations': request.session['nb_locations'],
+                'travel_time': [obj.travel_time for obj in location_links]
+            }
+        })
 
         return restart()
 
