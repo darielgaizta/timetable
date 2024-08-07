@@ -3,46 +3,46 @@
 {% load static %}
 
 {% block title %}
-    <title>Timetable Generator - Step 3</title>
-{% endblock %}
+    <title>Timteable Generator - Step X</title>
+{% endblock title %}
+
 
 {% block content %}
-<main class="container">
-    <form action="{% url 'step_3' %}" method="POST" class="px-5">
-        {% csrf_token %}
-        <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 3. Define Number of Classes for Each Course</h2>
-        
-        {% for course in courses %}
-        <div class="border rounded-3 my-3 p-3">
-            <h3 class="fs-6 p-3 text-secondary-emphasis bg-secondary-subtle border border-secondary-subtle rounded-3">Course: {{course.code}} {{course.name}}</h3>
-            <div class="row my-3 form-group">
-                <label for="credit{{course.code}}" class="col-md-4 col-form-label">Credit</label>
-                <div class="col-md-8">
-                    <input type="number" name="credit{{course.code}}" id="credit{{course.code}}" class="form-control" min="1" value="1">
-                    <small class="text-muted">How many credits does Course {{course.code}} cover?</small>
-                </div>
+    <main class="container">
+        <form action="{% url 'step_3' %}" method="post" class="px-5">
+            {% csrf_token %}
+            <h2 class="p-3 fs-6 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">Step 3. Define Number of Classes for Each Course</h2>
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Credit</th>
+                        <th scope="col">Semester</th>
+                        <th scope="col">Classes</th>
+                        <th scope="col">Requests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ course.code }}</td>
+                        <td>{{ course.name }}</td>
+                        <td><input type="number" name="credit{{course.code}}" id="credit{{course.code}}" class="form-control" min="1" value="{{course.credit}}"></td>
+                        <td><input type="number" name="semester{{course.code}}" id="semester{{course.code}}" class="form-control" min="1" value="{{course.semester}}"></td>
+                        <td><input type="number" name="nb_classes{{course.code}}" id="nb_classes{{course.code}}" class="form-control" min=0" value="0"></td>
+                        <td>Data</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse py-3">
+                <button class="btn btn-primary" onclick="alert('Please wait while we are generating your timetable. As soon as it is done, you will be redirected to home page.')">Submit</button>
+                <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_2' %}">Previous</a>
             </div>
-            <div class="row my-3 form-group">
-                <label for="semester{{course.code}}" class="col-md-4 col-form-label">Semester</label>
-                <div class="col-md-8">
-                    <input type="number" name="semester{{course.code}}" id="semester{{course.code}}" class="form-control" min="1" value="1">
-                    <small class="text-muted">In which semester will Course {{course.code}} be opened?</small>
-                </div>
-            </div>
-            <div class="row my-3 form-group">
-                <label for="nb_classes{{course.code}}" class="col-md-4 col-form-label">Number of Classes</b></label>
-                <div class="col-md-8">
-                    <input type="number" name="nb_classes{{course.code}}" id="nb_classes{{course.code}}" class="form-control" min=0" value="0">
-                    <small class="text-muted">How many classes are you going to open for Course {{course.code}}?</small>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-            
-        <div class="d-flex flex-row-reverse py-3">
-            <button class="btn btn-primary" onclick="alert('Please wait while we are generating your timetable. As soon as it is done, you will be redirected to home page.')">Submit</button>
-            <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_2' %}">Previous</a>
-        </div>
-    </form>
-</main>
+        </form>
+    </main>
 {% endblock %}
+    
