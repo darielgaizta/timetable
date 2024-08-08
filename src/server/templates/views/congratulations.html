@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Timetable Generator - Congratulations</title>
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <h2 class="p-3 fs-6 text-success-emphasis bg-success-subtle border border-success-subtle rounded-3">Congratulations!</h2>
+    <p>Timetable has been generated successfully.</p>
+    <table class="table table-responsive py-3">
+        <thead>
+            <tr>
+                <th scope="col">Variables</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Conflict</th>
+                <td>{% if conflict %} {{ conflict }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row"><Data>Duration</Data></th>
+                <td>{% if duration %} {{ duration }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Room</th>
+                <td>{% if domain.rooms %} {{ domain.rooms }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Classes</th>
+                <td>{% if domain.classes %} {{ domain.classes }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Courses</th>
+                <td>{% if domain.courses %} {{ domain.courses }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Timeslot</th>
+                <td>{% if domain.timeslots %} {{ domain.timeslots }} {% else %} None {% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Location</th>
+                <td>{% if domain.locations %} {{ domain.locations }} {% else %} None {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-secondary my-3" name="restart" value="1" href="{% url 'restart' %}">Back to Home</a>
+</main>
+{% endblock %}

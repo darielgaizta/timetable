@@ -73,10 +73,41 @@
                 </tbody>
             </table>
             <div class="d-flex flex-row-reverse py-3">
-                <button class="btn btn-primary" onclick="alert('Please wait while we are generating your timetable. As soon as it is done, you will be redirected to home page.')">Submit</button>
-                <a class="btn btn-secondary btn-previous" name="previous" value="1" href="{% url 'step_2' %}">Previous</a>
+                <button class="btn btn-primary" onclick="showLoadingMessage()">Submit</button>
+                <a class="btn btn-danger btn-previous" name="restart" value="1" href="{% url 'restart' %}">Restart</a>
             </div>
         </form>
     </main>
 {% endblock %}
-    
+
+
+{% block js %}
+<script>
+    function showLoadingMessage() {
+        // Display the alert message
+        alert('Please wait while we are generating your timetable. As soon as it is done, you will be redirected to another page.');
+
+        // Create a new div element
+        var loadingDiv = document.createElement('div');
+        loadingDiv.className = 'd-flex align-items-center';
+
+        // Create the loading text
+        var loadingText = document.createElement('strong');
+        loadingText.setAttribute('role', 'status');
+        loadingText.innerText = 'Loading...';
+
+        // Create the spinner
+        var spinner = document.createElement('div');
+        spinner.className = 'spinner-border ms-auto';
+        spinner.setAttribute('aria-hidden', 'true');
+
+        // Append the loading text and spinner to the div
+        loadingDiv.appendChild(loadingText);
+        loadingDiv.appendChild(spinner);
+
+        // Append the loading div to the existing container
+        var container = document.querySelector('.d-flex.flex-row-reverse.py-3');
+        container.appendChild(loadingDiv);
+    }
+</script>
+{% endblock %}

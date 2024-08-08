@@ -92,8 +92,7 @@ def step_3(request):
         excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + r.code for r in rooms])
         excel.write(solution=solution)
 
-        yaml = Yaml(filename=filename)
-        yaml.write(content={
+        result = {
             'algorithm': 'Genetic Algorithm',
             'conflict': score,
             'duration': time_taken,
@@ -103,15 +102,18 @@ def step_3(request):
                 'courses': request.session['nb_courses'],
                 'timeslots': request.session['nb_timeslots'],
                 'locations': request.session['nb_locations'],
-                'travel_time': [obj.travel_time for obj in location_links]
+                'travel_time': [f'{obj.location1}:{obj.location2}:{obj.travel_time}' for obj in location_links]
             }
-        })
+        }
 
-        return restart()
+        yaml = Yaml(filename=filename)
+        yaml.write(content=result)
+
+        return render(request, 'views/congratulations.html', result)
 
     return render(request, 'views/step_3.html', context)
 
-def restart():
+def restart(request):
     models.Location.objects.all().delete()
     models.Room.objects.all().delete()
     models.LocationLink.objects.all().delete()
