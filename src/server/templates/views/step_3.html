@@ -21,7 +21,8 @@
                         <th scope="col">Credit</th>
                         <th scope="col">Semester</th>
                         <th scope="col">Classes</th>
-                        <th scope="col">Requests</th>
+                        <th scope="col">Requested Rooms</th>
+                        <th scope="col">Requested Timeslots</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +34,40 @@
                         <td><input type="number" name="credit{{course.code}}" id="credit{{course.code}}" class="form-control" min="1" value="{{course.credit}}"></td>
                         <td><input type="number" name="semester{{course.code}}" id="semester{{course.code}}" class="form-control" min="1" value="{{course.semester}}"></td>
                         <td><input type="number" name="nb_classes{{course.code}}" id="nb_classes{{course.code}}" class="form-control" min=0" value="0"></td>
-                        <td>Data</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Rooms
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {% for room in rooms %}
+                                    <li>
+                                        <div class="dropdown-item form-check">
+                                            <input type="checkbox" name="req_room_{{course.code}}_{{room.code}}" id="req_room_{{course.code}}_{{room.code}}" class="form-check-input" value="req_room_{{course.code}}_{{room.code}}">
+                                            <label for="req_room_{{course.code}}_{{room.code}}" class="form-check-label w-100">{{ room.code }}</label>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select Timeslots
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {% for timeslot in timeslots %}
+                                    <li>
+                                        <div class="dropdown-item form-check">
+                                            <input type="checkbox" name="req_timeslot_{{course.code}}_{{timeslot.code}}" id="req_timeslot_{{course.code}}_{{timeslot.code}}" class="form-check-input" value="req_timeslot_{{course.code}}_{{timeslot.code}}">
+                                            <label for="req_timeslot_{{course.code}}_{{timeslot.code}} class="form-check-label w-100">{{ timeslot.code }}</label>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
