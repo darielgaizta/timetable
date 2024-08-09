@@ -57,10 +57,18 @@ def step_3(request):
         }
 
     if request.method == 'POST':
+        proposed = []
         for course in courses:
             credit = int(request.POST.get(f'credit{course.code}'))
             semester = int(request.POST.get(f'semester{course.code}'))
             nb_classes = int(request.POST.get(f'nb_classes{course.code}'))
+            requested_rooms = [request.POST.get(f'req_room_{course.code}_{room.code}') for room in rooms
+                               if request.POST.get(f'req_room_{course.code}_{room.code}', False)]
+            requested_timeslots = [request.POST.get(f'req_timeslot_{course.code}_{timeslot.code}') for timeslot in timeslots
+                                   if request.POST.get(f'req_timeslot_{course.code}_{timeslot.code}', False)]
+            
+            # Proposed will contain all requested rooms and timeslots for all courses.
+            proposed += requested_rooms + requested_timeslots
 
             # Update courses data.
             course.credit = credit
