@@ -72,3 +72,30 @@ class GeneratorService:
     def get_courses(self): return self.__courses
     def get_locations(self): return self.__locations
     def get_timeslots(self): return self.__timeslots
+
+
+class RequestRoomTimeslotService:
+    REQ_ROOM_REGEX = r'req_room_(\w)_(\w)'
+    REQ_TIMESLOT_REGEX = r'req_timeslot_(\w)_(\w)'
+    
+    def __init__(self, solution, proposed):
+        self.solution = solution
+        self.proposed = proposed
+        self._pairs = []
+    
+    def parse_proposed(self):
+        for i in self.proposed:
+            room = re.findall(self.REQ_ROOM_REGEX, i)
+            timeslot = re.findall(self.REQ_TIMESLOT_REGEX, i)
+            self._pairs += room + timeslot
+    
+    def match(self):
+        matches = {}
+        self.parse_proposed()
+        for pair in self._pairs:
+            matched = {k: v for k, v in self.solution.items()
+                       if v['timeslot'].code == pair[1]
+                       or v['room'].code == pair[1]
+                       and k.code == pair[0]}
+            matches = matches | matched
+        return matches
