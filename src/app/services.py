@@ -6,7 +6,7 @@ import string
 from faker import Faker
 from . import models
 
-class AppService:
+class GeneratorService:
     
     def __init__(self):
         self.faker = Faker()

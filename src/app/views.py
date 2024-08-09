@@ -32,7 +32,7 @@ def step_2(request):
                                                for i in range(1, int(request.session['nb_locations']))
                                                for j in range(i + 1, int(request.session['nb_locations']) + 1)}
         
-        service = services.AppService()
+        service = services.GeneratorService()
         service.generate_data(
             rooms_dict=request.session['rooms_dict'],
             nb_courses=request.session['nb_courses'],
