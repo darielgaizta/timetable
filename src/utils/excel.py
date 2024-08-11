@@ -1,9 +1,10 @@
 import openpyxl
+import itertools
 from django.conf import settings
 
 class Excel:
     ALPHABETS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    COLUMNS = list(ALPHABETS) + [f'A{i}' for i in ALPHABETS]
+    COLUMNS = list(ALPHABETS) + [str(i) + str(j) for i, j in itertools.product(ALPHABETS, ALPHABETS)]
     
     def __init__(self, filename):
         self.filename = filename

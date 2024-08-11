@@ -35,9 +35,10 @@ class GeneratorService:
         self.__generate_locations(nb_locations)
         for i in range(nb_locations):
             nb_rooms = rooms_dict[f'rooms{i + 1}']
+            location_room_code = self.__generate_code(length=2)
             for j in range(1, nb_rooms + 1):
                 name = self.faker.company()
-                code = self.__generate_code(length=2) + f'{j:03}'
+                code = location_room_code + f'{j:03}'
                 capacity = random.randint(40, 100)
                 location = self.__locations[i]
                 new_room = models.Room.objects.create(name=name, code=code, capacity=capacity, location=location)
