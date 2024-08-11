@@ -46,6 +46,10 @@
                 <th scope="row">Location</th>
                 <td>{% if domain.locations %} {{ domain.locations }} {% else %} None {% endif %}</td>
             </tr>
+            <tr>
+                <th scope="row">Requested</th>
+                <td>{% if requested %} {{ requested }} {% else %} None {% endif %}</td>
+            </tr>
         </tbody>
     </table>
     <a class="btn btn-secondary my-3" name="restart" value="1" href="{% url 'restart' %}">Back to Home</a>

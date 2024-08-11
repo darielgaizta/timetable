@@ -14,9 +14,10 @@ class GAEngine(engine.Engine):
                  timeslots: list,
                  course_classes: list,
                  location_links: list,
+                 proposal: list,
                  num_generations: int,
                  population_size: int):
-        super().__init__(rooms, timeslots, course_classes, location_links)
+        super().__init__(rooms, timeslots, course_classes, location_links, proposal)
         self.num_generations = num_generations
         self.population_size = population_size
     
@@ -50,7 +51,7 @@ class GAEngine(engine.Engine):
         
         while iterations < self.num_generations:
             checkpoint = time.time()
-            if current_score == 0 or checkpoint - start_time > 300:
+            if current_score == 0 or checkpoint - start_time > 1800:
                 print('Solution found.') if current_score == 0 else print('Algorithm exceeds 5 mins.')
                 break
             
@@ -61,7 +62,7 @@ class GAEngine(engine.Engine):
             parent1 = population[fitness_scores.index(sorted_fitness[0])]
             parent2 = population[fitness_scores.index(sorted_fitness[1])]
 
-            # TODO Perform crossover and mutation.
+            # Perform crossover and mutation.
             new_population = [self.perform_crossover(parent1, parent2) for _ in range(self.population_size)]
             new_population = [self.perform_mutation(solution) if random.random() < 0.2 else solution for solution in new_population]
             population = new_population

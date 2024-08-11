@@ -57,7 +57,7 @@ def step_3(request):
         }
 
     if request.method == 'POST':
-        proposed = []
+        proposal = []
         for course in courses:
             credit = int(request.POST.get(f'credit{course.code}'))
             semester = int(request.POST.get(f'semester{course.code}'))
@@ -68,7 +68,7 @@ def step_3(request):
                                    if request.POST.get(f'req_timeslot_{course.code}_{timeslot.code}', False)]
             
             # Proposed will contain all requested rooms and timeslots for all courses.
-            proposed += requested_rooms + requested_timeslots
+            proposal += requested_rooms + requested_timeslots
 
             # Update courses data.
             course.credit = credit
@@ -89,6 +89,7 @@ def step_3(request):
             timeslots=timeslots,
             course_classes=course_classes,
             location_links=location_links,
+            proposal=proposal,
             population_size=request.session['search_space'],
             num_generations=request.session['iterations']
         )
@@ -97,7 +98,7 @@ def step_3(request):
         # Handle output.
         filename = 'timetable_' + str(round(time.time() * 1000))
         excel = Excel(filename=filename)
-        excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + r.code for r in rooms])
+        excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + '-' + r.code for r in rooms])
         excel.write(solution=solution)
 
         result = {
@@ -111,7 +112,8 @@ def step_3(request):
                 'timeslots': request.session['nb_timeslots'],
                 'locations': request.session['nb_locations'],
                 'travel_time': [f'{obj.location1}:{obj.location2}:{obj.travel_time}' for obj in location_links]
-            }
+            },
+            'requested': len(proposal)
         }
 
         yaml = Yaml(filename=filename)

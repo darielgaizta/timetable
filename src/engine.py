@@ -4,6 +4,7 @@ Timetable generator engine.
 
 import random
 from abc import ABC, abstractmethod
+from app.services import RequestRoomTimeslotService
 
 class Engine(ABC):
 
@@ -11,11 +12,13 @@ class Engine(ABC):
                  rooms: list,
                  timeslots: list,
                  course_classes: list,
-                 location_links: list):
+                 location_links: list,
+                 proposal: list):
         self.rooms = rooms
         self.timeslots = timeslots
         self.course_classes = course_classes
         self.location_links = location_links
+        self.proposal = proposal
         self.timetable = { course_class: {
             'room': None,
             'course': None,
@@ -37,11 +40,14 @@ class Engine(ABC):
             for j in range(i + 1, len(self.course_classes)):
                 course_class1 = self.course_classes[i]
                 course_class2 = self.course_classes[j]
-                conflict += self.validate_course_classes(solution, course_class1, course_class2)
+                is_proposed = (course_class1.course.code == course_class2.course.code
+                               and any(course_class1.course.code in item for item in self.proposal))
+                conflict += self.validate_course_classes(solution, course_class1, course_class2, is_proposed)
+        conflict += self.validate_proposal(solution)
         print('Evaluating conflict -->', conflict)
         return conflict
     
-    def validate_course_classes(self, solution, course_class1, course_class2):
+    def validate_course_classes(self, solution, course_class1, course_class2, is_proposed):
         """Ensure there is no conflict between two course classes."""
         room1, course1, timeslot1, location1 = solution[course_class1].values()
         room2, course2, timeslot2, location2 = solution[course_class2].values()
@@ -53,8 +59,14 @@ class Engine(ABC):
                       and location1.code != location2.code
                       and course_class1.number == course_class2.number)
         
-        conflict = condition1 or condition2 or condition3
+        conflict = condition1 or condition2 or condition3 if not is_proposed else condition1
         return 1 if conflict else 0
+    
+    def validate_proposal(self, solution):
+        service = RequestRoomTimeslotService(solution=solution, proposal=self.proposal)
+        matches = service.match()
+        conflicts = len(self.proposal) - len(matches)
+        return 0 if conflicts <= 0 else conflicts
     
     @abstractmethod
     def run(self, *args, **kwargs): pass

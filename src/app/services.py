@@ -35,9 +35,9 @@ class GeneratorService:
         self.__generate_locations(nb_locations)
         for i in range(nb_locations):
             nb_rooms = rooms_dict[f'rooms{i + 1}']
-            for _ in range(nb_rooms):
+            for j in range(1, nb_rooms + 1):
                 name = self.faker.company()
-                code = self.__generate_code(length=5)
+                code = self.__generate_code(length=2) + f'{j:03}'
                 capacity = random.randint(40, 100)
                 location = self.__locations[i]
                 new_room = models.Room.objects.create(name=name, code=code, capacity=capacity, location=location)
@@ -54,8 +54,8 @@ class GeneratorService:
             self.__courses.append(new_courses)
     
     def __generate_timeslots(self, nb_timeslots):
-        for _ in range(nb_timeslots):
-            code = self.__generate_code(length=3)
+        for i in range(1, nb_timeslots + 1):
+            code = f'T{i:02}'
             new_timeslot = models.Timeslot.objects.create(code=code)
             self.__timeslots.append(new_timeslot)
         
@@ -75,27 +75,29 @@ class GeneratorService:
 
 
 class RequestRoomTimeslotService:
-    REQ_ROOM_REGEX = r'req_room_(\w)_(\w)'
-    REQ_TIMESLOT_REGEX = r'req_timeslot_(\w)_(\w)'
+    REQ_ROOM_REGEX = r'req_room_(\w+)_(\w+)'
+    REQ_TIMESLOT_REGEX = r'req_timeslot_(\w+)_(\w+)'
     
-    def __init__(self, solution, proposed):
+    def __init__(self, solution, proposal):
         self.solution = solution
-        self.proposed = proposed
+        self.proposal = proposal
         self._pairs = []
     
-    def parse_proposed(self):
-        for i in self.proposed:
+    def parse_proposal(self):
+        for i in self.proposal:
             room = re.findall(self.REQ_ROOM_REGEX, i)
             timeslot = re.findall(self.REQ_TIMESLOT_REGEX, i)
             self._pairs += room + timeslot
     
     def match(self):
         matches = {}
-        self.parse_proposed()
+        self.parse_proposal()
         for pair in self._pairs:
             matched = {k: v for k, v in self.solution.items()
-                       if v['timeslot'].code == pair[1]
-                       or v['room'].code == pair[1]
-                       and k.code == pair[0]}
-            matches = matches | matched
+                       if (v['timeslot'].code == pair[1]
+                       or v['room'].code == pair[1])
+                       and k.course.code == pair[0]}
+            if matched:
+                key, value = next(iter(matched.items()))
+                matches = matches | {key: value}
         return matches
