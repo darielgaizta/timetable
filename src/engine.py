@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from app.services import RequestRoomTimeslotService
 
 class Engine(ABC):
+    EXEC_TIME_LIMIT = 1800
 
     def __init__(self,
                  rooms: list,
@@ -44,29 +45,53 @@ class Engine(ABC):
                                and any(course_class1.course.code in item for item in self.proposal))
                 conflict += self.validate_course_classes(solution, course_class1, course_class2, is_proposed)
         conflict += self.validate_proposal(solution)
-        print('Evaluating conflict -->', conflict)
+        print('Evaluating conflicts on solution -->', conflict)
         return conflict
     
     def validate_course_classes(self, solution, course_class1, course_class2, is_proposed):
         """Ensure there is no conflict between two course classes."""
         room1, course1, timeslot1, location1 = solution[course_class1].values()
         room2, course2, timeslot2, location2 = solution[course_class2].values()
-        
+        timeslot_diffs = abs(int(timeslot1.code[1:]) - int(timeslot2.code[1:]))
+        travel_time = self.get_travel_time(location1, location2)
+
         condition1 = timeslot1 == timeslot2 and room1 == room2
-        condition2 = (course1.code == course2.code
+        condition2 = (course1 == course2
                       and timeslot1 != timeslot2)
-        condition3 = (course1.code != course2.code
-                      and location1.code != location2.code
+        condition3 = (course1 != course2
+                      and location1 != location2
                       and course_class1.number == course_class2.number)
+        condition4 = (course1 != course2
+                      and course_class1.number != course_class2.number
+                      and course1.semester == course2.semester
+                      and travel_time != 0
+                      and travel_time >= timeslot_diffs)
         
-        conflict = condition1 or condition2 or condition3 if not is_proposed else condition1
+        if condition1: print('Condition 1 broken.')
+        if condition2: print('Condition 2 broken.')
+        if condition3: print('Condition 3 broken.')
+        if condition4: print('Condition 4 broken.')
+        
+        conflict = condition1 or condition2 or condition4 if not is_proposed else condition1 or condition4
         return 1 if conflict else 0
     
     def validate_proposal(self, solution):
         service = RequestRoomTimeslotService(solution=solution, proposal=self.proposal)
         matches = service.match()
         conflicts = len(self.proposal) - len(matches)
-        return 0 if conflicts <= 0 else conflicts
+        if conflicts > 0:
+            print('Proposal broken:', self.proposal)
+            print('Matched schedules are:', matches)
+            return conflicts
+        return 0
+    
+    def get_travel_time(self, location1, location2):
+        for link in self.location_links:
+            if location1 != location2:
+                if ((link.location1 == location1 or link.location2 == location1)
+                    and (link.location2 == location1 or link.location2 == location2)):
+                    return link.travel_time
+        return 0
     
     @abstractmethod
     def run(self, *args, **kwargs): pass

@@ -2,6 +2,7 @@ import time
 import random
 from django.shortcuts import render, redirect
 from engines.ga import GAEngine
+from engines.ts import TSEngine
 from utils.excel import Excel
 from utils.yaml import Yaml
 from utils.serializer import ModelToDictSerializer
@@ -102,9 +103,10 @@ def step_3(request):
         excel.write(solution=solution)
 
         result = {
-            'algorithm': 'Genetic Algorithm',
             'conflict': score,
             'duration': time_taken,
+            'search_space': request.session['search_space'],
+            'iterations': request.session['iterations'],
             'domain': {
                 'rooms': len(rooms),
                 'classes': len(course_classes),

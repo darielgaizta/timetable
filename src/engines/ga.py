@@ -47,12 +47,12 @@ class GAEngine(engine.Engine):
         iterations = 0
 
         best_solution = min(population, key=lambda s: self.evaluate(s))
-        current_score = self.evaluate(best_solution)
+        best_score = self.evaluate(best_solution)
         
         while iterations < self.num_generations:
             checkpoint = time.time()
-            if current_score == 0 or checkpoint - start_time > 1800:
-                print('Solution found.') if current_score == 0 else print('Algorithm exceeds 5 mins.')
+            if best_score == 0 or checkpoint - start_time > self.EXEC_TIME_LIMIT:
+                print('Solution found.') if best_score == 0 else print('Algorithm exceeds time limit.')
                 break
             
             fitness_scores = [self.evaluate(solution) for solution in population]
@@ -68,12 +68,12 @@ class GAEngine(engine.Engine):
             population = new_population
 
             best_solution = min(population, key=lambda solution: self.evaluate(solution))
-            current_score = self.evaluate(best_solution)
+            best_score = self.evaluate(best_solution)
             iterations += 1
 
         time_taken = time.time() - start_time
         if iterations == self.num_generations:
             print('Algorithm iterations ended.')
         print('Time taken:', time_taken, 'sec.')
-        print(best_solution, '=> Score', current_score)
-        return best_solution, current_score, time_taken
+        print(best_solution, '=> Score', best_score)
+        return best_solution, best_score, time_taken
