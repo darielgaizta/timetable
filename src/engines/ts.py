@@ -23,7 +23,9 @@ class TSEngine(engine.Engine):
     
     def get_neighbors(self, solution):
         neighbors = []
+        counter = 1
         for key, value in solution.items():
+            print(f'Getting neighbor for {key} => Found: ', end='')
             for room in self.rooms:
                 if room != value['room']:
                     for timeslot in self.timeslots:
@@ -34,6 +36,8 @@ class TSEngine(engine.Engine):
                             neighbor[key]['timeslot'] = timeslot
                             neighbor[key]['location'] = neighbor[key]['room'].location
                             neighbors.append(neighbor)
+                            counter += 1
+            print(counter)
         return neighbors
     
     def is_tabu(self, solution): return solution in self.tabu_list
@@ -54,6 +58,7 @@ class TSEngine(engine.Engine):
 
         while iterations < self.max_iterations:
             checkpoint = time.time()
+            print('Checkpoint: Iterations=', iterations)
             if best_score == 0 or checkpoint - start_time > self.EXEC_TIME_LIMIT:
                 print('Solution found.') if best_score == 0 else print('Algorithm exceeds time limit.')
                 break

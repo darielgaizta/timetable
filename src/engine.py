@@ -45,7 +45,7 @@ class Engine(ABC):
                                and any(course_class1.course.code in item for item in self.proposal))
                 conflict += self.validate_course_classes(solution, course_class1, course_class2, is_proposed)
         conflict += self.validate_proposal(solution)
-        print('Evaluating conflicts on solution -->', conflict)
+        print('### Evaluating conflicts on solution -->', conflict)
         return conflict
     
     def validate_course_classes(self, solution, course_class1, course_class2, is_proposed):
@@ -67,11 +67,6 @@ class Engine(ABC):
                       and travel_time != 0
                       and travel_time >= timeslot_diffs)
         
-        if condition1: print('Condition 1 broken.')
-        if condition2: print('Condition 2 broken.')
-        if condition3: print('Condition 3 broken.')
-        if condition4: print('Condition 4 broken.')
-        
         conflict = condition1 or condition2 or condition4 if not is_proposed else condition1 or condition4
         return 1 if conflict else 0
     
@@ -80,8 +75,6 @@ class Engine(ABC):
         matches = service.match()
         conflicts = len(self.proposal) - len(matches)
         if conflicts > 0:
-            print('Proposal broken:', self.proposal)
-            print('Matched schedules are:', matches)
             return conflicts
         return 0
     
