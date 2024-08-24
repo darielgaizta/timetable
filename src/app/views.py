@@ -5,7 +5,6 @@ from engines.ga import GAEngine
 from engines.ts import TSEngine
 from utils.excel import Excel
 from utils.yaml import Yaml
-from utils.serializer import ModelToDictSerializer
 from . import models, services
 
 # Create your views here.
@@ -68,7 +67,7 @@ def step_3(request):
             requested_timeslots = [request.POST.get(f'req_timeslot_{course.code}_{timeslot.code}') for timeslot in timeslots
                                    if request.POST.get(f'req_timeslot_{course.code}_{timeslot.code}', False)]
             
-            # Proposed will contain all requested rooms and timeslots for all courses.
+            # `proposal` will contain all requested rooms and timeslots for all courses.
             proposal += requested_rooms + requested_timeslots
 
             # Update courses data.
@@ -85,19 +84,19 @@ def step_3(request):
         course_classes = models.CourseClass.objects.all()
         location_links = models.LocationLink.objects.all()
 
-        engine = GAEngine(
+        engine = TSEngine(
             rooms=rooms,
             timeslots=timeslots,
             course_classes=course_classes,
             location_links=location_links,
             proposal=proposal,
-            population_size=request.session['search_space'],
-            num_generations=request.session['iterations']
+            tabu_list_size=request.session['search_space'],
+            max_iterations=request.session['iterations']
         )
         solution, score, time_taken = engine.run()
 
         # Handle output.
-        filename = 'timetable_' + str(round(time.time() * 1000))
+        filename = 'ts_s05_timetable_' + str(round(time.time() * 1000))
         excel = Excel(filename=filename)
         excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + '-' + r.code for r in rooms])
         excel.write(solution=solution)
@@ -121,15 +120,20 @@ def step_3(request):
         yaml = Yaml(filename=filename)
         yaml.write(content=result)
 
+        flush()
+        
         return render(request, 'views/congratulations.html', result)
 
     return render(request, 'views/step_3.html', context)
 
 def restart(request):
+    flush()
+    return redirect('step_1')
+
+def flush():
     models.Location.objects.all().delete()
     models.Room.objects.all().delete()
     models.LocationLink.objects.all().delete()
     models.Course.objects.all().delete()
     models.CourseClass.objects.all().delete()
     models.Timeslot.objects.all().delete()
-    return redirect('step_1')
