@@ -1,0 +1,33 @@
+conflict: 0
+duration: 2.5817551612854004
+search_space: 40
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - 32Z:QLY:1
+  - 32Z:H5B:1
+  - 32Z:60F:2
+  - 32Z:VLV:2
+  - 32Z:YXS:3
+  - 32Z:ZHP:3
+  - QLY:H5B:4
+  - QLY:60F:4
+  - QLY:VLV:3
+  - QLY:YXS:3
+  - QLY:ZHP:2
+  - H5B:60F:2
+  - H5B:VLV:1
+  - H5B:YXS:1
+  - H5B:ZHP:2
+  - 60F:VLV:2
+  - 60F:YXS:3
+  - 60F:ZHP:3
+  - VLV:YXS:4
+  - VLV:ZHP:4
+  - YXS:ZHP:3
+requested: 4

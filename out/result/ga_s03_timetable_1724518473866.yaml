@@ -1,0 +1,15 @@
+conflict: 17
+duration: 1803.8102712631226
+search_space: 70
+iterations: 500
+domain:
+  rooms: 12
+  classes: 50
+  courses: 20
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - WV9:ZEM:1
+  - WV9:RMI:3
+  - ZEM:RMI:2
+requested: 0

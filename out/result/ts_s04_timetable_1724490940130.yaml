@@ -1,0 +1,18 @@
+conflict: 178
+duration: 2859.3746514320374
+search_space: 50
+iterations: 700
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - CAJ:0MU:1
+  - CAJ:AWE:2
+  - CAJ:XKZ:3
+  - 0MU:AWE:1
+  - 0MU:XKZ:2
+  - AWE:XKZ:1
+requested: 8

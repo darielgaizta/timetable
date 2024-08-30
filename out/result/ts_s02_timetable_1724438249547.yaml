@@ -1,0 +1,13 @@
+conflict: 0
+duration: 6.987240314483643
+search_space: 120
+iterations: 300
+domain:
+  rooms: 8
+  classes: 8
+  courses: 6
+  timeslots: 10
+  locations: 2
+  travel_time:
+  - HSI:GZ8:1
+requested: 2

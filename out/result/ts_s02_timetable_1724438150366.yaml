@@ -1,0 +1,13 @@
+conflict: 0
+duration: 5.128387451171875
+search_space: 65
+iterations: 300
+domain:
+  rooms: 8
+  classes: 8
+  courses: 6
+  timeslots: 10
+  locations: 2
+  travel_time:
+  - TWW:A4K:1
+requested: 2

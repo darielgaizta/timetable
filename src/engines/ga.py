@@ -25,6 +25,7 @@ class GAEngine(engine.Engine):
         """Returns a new solution which courses are assigned randomly by 50% probability."""
         offspring = {}
         for course_class in self.course_classes:
+            print(f'Performing crossover for {course_class}...')
             if random.random() < 0.5:
                 offspring[course_class] = copy.deepcopy(parent1[course_class])
             else:
@@ -51,6 +52,7 @@ class GAEngine(engine.Engine):
         
         while iterations < self.num_generations:
             checkpoint = time.time()
+            print('Checkpoint: Iterations=', iterations)
             if best_score == 0 or checkpoint - start_time > self.EXEC_TIME_LIMIT:
                 print('Solution found.') if best_score == 0 else print('Algorithm exceeds time limit.')
                 break

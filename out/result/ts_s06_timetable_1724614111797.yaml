@@ -1,0 +1,33 @@
+conflict: 0
+duration: 2.6081786155700684
+search_space: 30
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - XDW:YWC:1
+  - XDW:4BK:1
+  - XDW:I2L:2
+  - XDW:BH6:2
+  - XDW:FWD:3
+  - XDW:F4F:3
+  - YWC:4BK:4
+  - YWC:I2L:4
+  - YWC:BH6:3
+  - YWC:FWD:3
+  - YWC:F4F:2
+  - 4BK:I2L:2
+  - 4BK:BH6:1
+  - 4BK:FWD:1
+  - 4BK:F4F:2
+  - I2L:BH6:2
+  - I2L:FWD:3
+  - I2L:F4F:3
+  - BH6:FWD:4
+  - BH6:F4F:4
+  - FWD:F4F:3
+requested: 4

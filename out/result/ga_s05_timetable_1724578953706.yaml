@@ -1,0 +1,15 @@
+conflict: 3312
+duration: 1806.450139760971
+search_space: 100
+iterations: 500
+domain:
+  rooms: 35
+  classes: 350
+  courses: 50
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - KDQ:KLJ:1
+  - KDQ:9X2:1
+  - KLJ:9X2:2
+requested: 0

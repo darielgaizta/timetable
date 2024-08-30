@@ -1,0 +1,18 @@
+conflict: 11
+duration: 1806.9759359359741
+search_space: 100
+iterations: 500
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - QF9:ZHL:1
+  - QF9:CJN:2
+  - QF9:XIP:3
+  - ZHL:CJN:1
+  - ZHL:XIP:2
+  - CJN:XIP:1
+requested: 8

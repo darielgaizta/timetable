@@ -1,0 +1,18 @@
+conflict: 21
+duration: 1809.9606137275696
+search_space: 90
+iterations: 500
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - 369:Q6Q:1
+  - 369:V9T:2
+  - 369:D6T:3
+  - Q6Q:V9T:1
+  - Q6Q:D6T:2
+  - V9T:D6T:1
+requested: 8

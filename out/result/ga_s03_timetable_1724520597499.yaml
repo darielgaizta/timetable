@@ -1,0 +1,15 @@
+conflict: 2
+duration: 1803.542192697525
+search_space: 120
+iterations: 500
+domain:
+  rooms: 12
+  classes: 50
+  courses: 20
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - ADH:G3P:1
+  - ADH:WG9:3
+  - G3P:WG9:2
+requested: 0

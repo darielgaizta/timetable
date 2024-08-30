@@ -84,22 +84,19 @@ def step_3(request):
         course_classes = models.CourseClass.objects.all()
         location_links = models.LocationLink.objects.all()
 
-        engine = TSEngine(
+        engine = GAEngine(
             rooms=rooms,
             timeslots=timeslots,
             course_classes=course_classes,
             location_links=location_links,
             proposal=proposal,
-            tabu_list_size=request.session['search_space'],
-            max_iterations=request.session['iterations']
+            population_size=request.session['search_space'],
+            num_generations=request.session['iterations']
         )
         solution, score, time_taken = engine.run()
 
         # Handle output.
-        filename = 'ts_s05_timetable_' + str(round(time.time() * 1000))
-        excel = Excel(filename=filename)
-        excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + '-' + r.code for r in rooms])
-        excel.write(solution=solution)
+        filename = 'timetable_' + str(round(time.time() * 1000))
 
         result = {
             'conflict': score,
@@ -119,6 +116,10 @@ def step_3(request):
 
         yaml = Yaml(filename=filename)
         yaml.write(content=result)
+
+        excel = Excel(filename=filename)
+        excel.setup(rows=[t.code for t in timeslots], columns=[r.location.code + '-' + r.code for r in rooms])
+        excel.write(solution=solution)
 
         flush()
         

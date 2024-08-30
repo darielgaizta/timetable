@@ -1,0 +1,18 @@
+conflict: 150
+duration: 1983.2452375888824
+search_space: 70
+iterations: 500
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - PLW:7CM:1
+  - PLW:0EV:2
+  - PLW:GEE:3
+  - 7CM:0EV:1
+  - 7CM:GEE:2
+  - 0EV:GEE:1
+requested: 8

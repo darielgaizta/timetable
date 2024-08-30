@@ -1,0 +1,18 @@
+conflict: 175
+duration: 2009.7125775814056
+search_space: 100
+iterations: 500
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - ZAJ:7A1:1
+  - ZAJ:JMO:2
+  - ZAJ:T1T:3
+  - 7A1:JMO:1
+  - 7A1:T1T:2
+  - JMO:T1T:1
+requested: 8

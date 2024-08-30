@@ -1,0 +1,18 @@
+conflict: 664
+duration: 1847.22558927536
+search_space: 100
+iterations: 500
+domain:
+  rooms: 52
+  classes: 175
+  courses: 38
+  timeslots: 15
+  locations: 4
+  travel_time:
+  - UKA:Q3D:2
+  - UKA:N1K:2
+  - UKA:V1H:2
+  - Q3D:N1K:3
+  - Q3D:V1H:1
+  - N1K:V1H:1
+requested: 20

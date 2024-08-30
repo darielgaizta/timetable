@@ -1,0 +1,15 @@
+conflict: 3636
+duration: 1804.7699224948883
+search_space: 150
+iterations: 500
+domain:
+  rooms: 35
+  classes: 350
+  courses: 50
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - EMZ:ZEC:1
+  - EMZ:YVK:1
+  - ZEC:YVK:2
+requested: 0

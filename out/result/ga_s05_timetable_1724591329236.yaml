@@ -1,0 +1,15 @@
+conflict: 3299
+duration: 1853.6918573379517
+search_space: 150
+iterations: 500
+domain:
+  rooms: 35
+  classes: 350
+  courses: 50
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - 1MT:DJ5:1
+  - 1MT:YO1:1
+  - DJ5:YO1:2
+requested: 0

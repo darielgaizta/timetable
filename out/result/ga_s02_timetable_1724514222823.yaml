@@ -1,0 +1,13 @@
+conflict: 0
+duration: 5.712905645370483
+search_space: 60
+iterations: 350
+domain:
+  rooms: 8
+  classes: 8
+  courses: 6
+  timeslots: 10
+  locations: 2
+  travel_time:
+  - F45:TYI:1
+requested: 2

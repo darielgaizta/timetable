@@ -1,0 +1,15 @@
+conflict: 109
+duration: 1965.2684829235077
+search_space: 80
+iterations: 500
+domain:
+  rooms: 12
+  classes: 50
+  courses: 20
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - O4C:PIA:1
+  - O4C:N7N:3
+  - PIA:N7N:2
+requested: 0

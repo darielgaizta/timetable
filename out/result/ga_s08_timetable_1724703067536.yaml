@@ -1,0 +1,18 @@
+conflict: 651
+duration: 1822.7055187225342
+search_space: 70
+iterations: 500
+domain:
+  rooms: 52
+  classes: 175
+  courses: 38
+  timeslots: 15
+  locations: 4
+  travel_time:
+  - 7PK:E4D:2
+  - 7PK:YCH:2
+  - 7PK:X5U:2
+  - E4D:YCH:3
+  - E4D:X5U:1
+  - YCH:X5U:1
+requested: 20

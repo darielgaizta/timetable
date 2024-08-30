@@ -1,0 +1,18 @@
+conflict: 568
+duration: 1855.7576768398285
+search_space: 120
+iterations: 500
+domain:
+  rooms: 52
+  classes: 175
+  courses: 38
+  timeslots: 15
+  locations: 4
+  travel_time:
+  - D7D:55L:2
+  - D7D:4KS:2
+  - D7D:3T3:2
+  - 55L:4KS:3
+  - 55L:3T3:1
+  - 4KS:3T3:1
+requested: 20

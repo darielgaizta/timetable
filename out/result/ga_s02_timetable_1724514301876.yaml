@@ -1,0 +1,13 @@
+conflict: 0
+duration: 0.8036472797393799
+search_space: 50
+iterations: 300
+domain:
+  rooms: 8
+  classes: 8
+  courses: 6
+  timeslots: 10
+  locations: 2
+  travel_time:
+  - 37S:1HH:1
+requested: 2

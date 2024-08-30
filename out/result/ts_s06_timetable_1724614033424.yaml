@@ -1,0 +1,33 @@
+conflict: 0
+duration: 0.8248305320739746
+search_space: 50
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - Z6U:IF3:1
+  - Z6U:PPK:1
+  - Z6U:KAW:2
+  - Z6U:1R7:2
+  - Z6U:UR0:3
+  - Z6U:GNL:3
+  - IF3:PPK:4
+  - IF3:KAW:4
+  - IF3:1R7:3
+  - IF3:UR0:3
+  - IF3:GNL:2
+  - PPK:KAW:2
+  - PPK:1R7:1
+  - PPK:UR0:1
+  - PPK:GNL:2
+  - KAW:1R7:2
+  - KAW:UR0:3
+  - KAW:GNL:3
+  - 1R7:UR0:4
+  - 1R7:GNL:4
+  - UR0:GNL:3
+requested: 4

@@ -1,0 +1,15 @@
+conflict: 95
+duration: 2022.3675940036774
+search_space: 100
+iterations: 500
+domain:
+  rooms: 12
+  classes: 50
+  courses: 20
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - DKY:VMD:1
+  - DKY:1FU:3
+  - VMD:1FU:2
+requested: 0

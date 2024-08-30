@@ -1,0 +1,33 @@
+conflict: 0
+duration: 2.6372673511505127
+search_space: 100
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - GC0:8XI:1
+  - GC0:PPC:1
+  - GC0:TZ2:2
+  - GC0:9V9:2
+  - GC0:A7S:3
+  - GC0:TO1:3
+  - 8XI:PPC:4
+  - 8XI:TZ2:4
+  - 8XI:9V9:3
+  - 8XI:A7S:3
+  - 8XI:TO1:2
+  - PPC:TZ2:2
+  - PPC:9V9:1
+  - PPC:A7S:1
+  - PPC:TO1:2
+  - TZ2:9V9:2
+  - TZ2:A7S:3
+  - TZ2:TO1:3
+  - 9V9:A7S:4
+  - 9V9:TO1:4
+  - A7S:TO1:3
+requested: 4

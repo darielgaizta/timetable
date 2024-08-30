@@ -1,0 +1,33 @@
+conflict: 0
+duration: 4.229461908340454
+search_space: 100
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - 3MG:Z1V:1
+  - 3MG:98Q:1
+  - 3MG:5C1:2
+  - 3MG:0HS:2
+  - 3MG:06H:3
+  - 3MG:5XT:3
+  - Z1V:98Q:4
+  - Z1V:5C1:4
+  - Z1V:0HS:3
+  - Z1V:06H:3
+  - Z1V:5XT:2
+  - 98Q:5C1:2
+  - 98Q:0HS:1
+  - 98Q:06H:1
+  - 98Q:5XT:2
+  - 5C1:0HS:2
+  - 5C1:06H:3
+  - 5C1:5XT:3
+  - 0HS:06H:4
+  - 0HS:5XT:4
+  - 06H:5XT:3
+requested: 4

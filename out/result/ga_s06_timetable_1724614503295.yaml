@@ -1,0 +1,33 @@
+conflict: 0
+duration: 3.929676055908203
+search_space: 50
+iterations: 500
+domain:
+  rooms: 9
+  classes: 5
+  courses: 2
+  timeslots: 10
+  locations: 7
+  travel_time:
+  - CI3:7K8:1
+  - CI3:CC4:1
+  - CI3:584:2
+  - CI3:5JL:2
+  - CI3:RBP:3
+  - CI3:5N2:3
+  - 7K8:CC4:4
+  - 7K8:584:4
+  - 7K8:5JL:3
+  - 7K8:RBP:3
+  - 7K8:5N2:2
+  - CC4:584:2
+  - CC4:5JL:1
+  - CC4:RBP:1
+  - CC4:5N2:2
+  - 584:5JL:2
+  - 584:RBP:3
+  - 584:5N2:3
+  - 5JL:RBP:4
+  - 5JL:5N2:4
+  - RBP:5N2:3
+requested: 4

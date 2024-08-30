@@ -1,0 +1,12 @@
+conflict: 0
+duration: 19.415599822998047
+search_space: 100
+iterations: 500
+domain:
+  rooms: 4
+  classes: 9
+  courses: 3
+  timeslots: 10
+  locations: 1
+  travel_time: []
+requested: 0

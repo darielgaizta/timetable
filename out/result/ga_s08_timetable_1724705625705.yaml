@@ -1,0 +1,18 @@
+conflict: 670
+duration: 1828.2670812606812
+search_space: 120
+iterations: 500
+domain:
+  rooms: 52
+  classes: 175
+  courses: 38
+  timeslots: 15
+  locations: 4
+  travel_time:
+  - FQ6:KDC:2
+  - FQ6:2PT:2
+  - FQ6:2N2:2
+  - KDC:2PT:3
+  - KDC:2N2:1
+  - 2PT:2N2:1
+requested: 20

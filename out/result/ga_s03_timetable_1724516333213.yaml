@@ -1,0 +1,15 @@
+conflict: 7
+duration: 1805.253386259079
+search_space: 100
+iterations: 500
+domain:
+  rooms: 12
+  classes: 50
+  courses: 20
+  timeslots: 10
+  locations: 3
+  travel_time:
+  - AIL:ZNY:1
+  - AIL:LH8:3
+  - ZNY:LH8:2
+requested: 0

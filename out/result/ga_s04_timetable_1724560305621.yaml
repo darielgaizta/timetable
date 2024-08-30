@@ -1,0 +1,18 @@
+conflict: 32
+duration: 1805.9704644680023
+search_space: 120
+iterations: 500
+domain:
+  rooms: 22
+  classes: 67
+  courses: 11
+  timeslots: 10
+  locations: 4
+  travel_time:
+  - 785:K0U:1
+  - 785:C1A:2
+  - 785:09I:3
+  - K0U:C1A:1
+  - K0U:09I:2
+  - C1A:09I:1
+requested: 8
